@@ -1,0 +1,5 @@
+# Keep the build files and README out of public view
+RedirectMatch 404 ^/(_source|README\.md|\.git)
+
+# Nicer error page fallback to the home page
+ErrorDocument 404 /index.html
