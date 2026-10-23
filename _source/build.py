@@ -448,7 +448,7 @@ def business_schema():
         "address": {"@type": "PostalAddress", "streetAddress": STREET, "addressLocality": TOWN,
                     "addressRegion": "North Yorkshire", "postalCode": POSTCODE, "addressCountry": "GB"},
         "areaServed": ["Harrogate", "Knaresborough", "Pannal", "Killinghall", "Starbeck"],
-        "foundingDate": "1986", "sameAs": ["https://share.google/WVhCBlfNNvHvr8HG9"], "alternateName": ["Harrogate Dry Cleaners", "Harrogate Cleaners & Intrim"], "hasMap": MAPS, "image": DOMAIN + "/images/blue-suit-tailoring.jpg", "openingHoursSpecification": spec,
+        "foundingDate": "1986", "sameAs": ["https://share.google/WVhCBlfNNvHvr8HG9"], "alternateName": ["Harrogate Dry Cleaners", "Harrogate Cleaners & Intrim"], "hasMap": MAPS, "image": DOMAIN + "/share-image.jpg", "logo": DOMAIN + "/icon-512.png", "openingHoursSpecification": spec,
         "makesOffer": [{"@type": "Offer", "itemOffered": {"@type": "Service", "name": s}} for s in
                        ["Dry cleaning", "Laundry and service wash", "Shirt laundering", "Alterations and repairs",
                         "Wedding dress cleaning and preservation", "Duvet and curtain cleaning"]],
@@ -473,17 +473,38 @@ def hours_table():
 
 def head(title, desc, path, extra_ld):
     canon = DOMAIN + "/" + ("" if path == "index.html" else path)
+    post = next((p for p in POSTS if p["slug"] == path), None)
+    og_type = "article" if post else "website"
+    if post and post.get("img"):
+        og_img = DOMAIN + "/" + IMAGES[post["img"]][0]; og_alt = IMAGES[post["img"]][1]; og_size = ""
+    else:
+        og_img = DOMAIN + "/share-image.jpg"; og_alt = "Harrogate Cleaners shopfront on Cold Bath Road, Harrogate. Dry cleaning, laundry and alterations, established 1986."
+        og_size = '<meta property="og:image:width" content="1200">\n<meta property="og:image:height" content="630">\n'
     return f"""<title>{esc(title)}</title>
 <meta name="description" content="{esc(desc)}">
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="canonical" href="{canon}">
-<meta property="og:type" content="website">
+<meta property="og:type" content="{og_type}">
 <meta property="og:site_name" content="{NAME}">
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(desc)}">
 <meta property="og:url" content="{canon}">
 <meta property="og:locale" content="en_GB">
-<meta property="og:image" content="{DOMAIN}/images/blue-suit-tailoring.jpg">
+<meta property="og:image" content="{og_img}">
+<meta property="og:image:secure_url" content="{og_img}">
+<meta property="og:image:type" content="image/jpeg">
+{og_size}<meta property="og:image:alt" content="{esc(og_alt)}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{esc(title)}">
+<meta name="twitter:description" content="{esc(desc)}">
+<meta name="twitter:image" content="{og_img}">
+<meta name="twitter:image:alt" content="{esc(og_alt)}">
+<meta name="theme-color" content="#0F3D35">
+<link rel="icon" href="favicon.ico" sizes="48x48">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
 <meta name="geo.region" content="GB-NYK">
 <meta name="geo.placename" content="Harrogate">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1003,6 +1024,9 @@ def build(artifact):
     os.makedirs(os.path.join(d, "images"), exist_ok=True)
     for src, _ in IMAGES.values():
         shutil.copy(os.path.join(ROOT, "img", os.path.basename(src)), os.path.join(d, src))
+    for f in ["favicon.ico","favicon-16x16.png","favicon-32x32.png","apple-touch-icon.png","icon-192.png","icon-512.png","share-image.jpg"]:
+        shutil.copy(os.path.join(ROOT, "brand", f), os.path.join(d, f))
+    open(os.path.join(d, "site.webmanifest"), "w").write(json.dumps({"name": NAME, "short_name": NAME, "icons": [{"src": "icon-192.png", "sizes": "192x192", "type": "image/png"}, {"src": "icon-512.png", "sizes": "512x512", "type": "image/png"}], "theme_color": "#0F3D35", "background_color": "#F2F6F3", "display": "browser", "start_url": "/"}))
     for k, v in extras().items():
         open(os.path.join(d, k), "w", encoding="utf-8").write(v)
     return d
