@@ -607,6 +607,7 @@ HOME_FAQS = [
     ("Can you clean my wedding dress?", "Yes. We clean wedding dresses, including silk, lace and beaded gowns, and can box them in acid-free tissue for long-term storage."),
     ("Do you clean duvets and curtains?", "Yes. We clean feather, down and synthetic duvets of every size, as well as pillows, throws and curtains."),
     ("Do you do alterations and repairs?", "Yes. We do hems, zips, taking in and letting out, and small repairs."),
+    ("Where can I park?", "Parking on Cold Bath Road is limited, so please check the signs. The nearest public car parks are Montpellier car park on The Ginnel (about 5 minutes' walk) and Jubilee multi-storey on Union Street (about 8 minutes' walk)."),
     ("Do I need an appointment?", "No. Just bring your items to the shop during opening hours. For a wedding dress fitting or large curtain order, a quick call first is helpful."),
 ]
 
@@ -865,7 +866,8 @@ def find_us():
 <div class="card"><h2>Address</h2><p style="font-size:1.3rem;color:var(--ink)"><strong>{NAME}</strong><br>{STREET}<br>{TOWN}<br>{POSTCODE}</p><div class="btns"><a class="btn solid" href="{MAPS}" rel="noopener">Directions in Google Maps</a><button class="copy-btn" type="button" data-copy="{NAME}, {STREET}, {TOWN} {POSTCODE}">Copy address</button></div></div>
 <div class="card"><h2>Opening times</h2>{hours_table()}</div>
 <div class="card"><h2>Phone &amp; WhatsApp</h2><p style="font-size:1.6rem;color:var(--ink)"><strong>{PHONE}</strong></p><p>Call or WhatsApp us on the same number to check if your items are ready, ask about a price or send a photo of a stain.</p><div class="btns"><a class="btn line" href="{WHATSAPP}" rel="noopener">WhatsApp us</a></div></div>
-<div class="card"><h2>Parking &amp; getting here</h2><p>[Parking details: nearest car park, on-street parking rules, bus routes, and how long it takes to walk from the town centre.]</p></div>
+<div class="card"><h2>Getting here</h2><p>We are on Cold Bath Road, a short walk from the Montpellier Quarter and Valley Gardens in the centre of Harrogate.</p><ul style="margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;color:var(--ink-soft)"><li><strong style="color:var(--ink)">On foot:</strong> about 5 minutes from Montpellier and the town centre shops.</li><li><strong style="color:var(--ink)">By train or bus:</strong> Harrogate station and the bus station are about 12 to 15 minutes' walk.</li><li><strong style="color:var(--ink)">Sat nav:</strong> use the postcode {POSTCODE}.</li><li>Look for the blue shopfront with the Harrogate Cleaners sign.</li></ul></div>
+<div class="card"><h2>Parking</h2><p>Parking on Cold Bath Road itself is limited, and parts of the road have no-waiting restrictions, so please check the signs before you leave your car.</p><p>The nearest public car parks are:</p><ul style="margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:6px;color:var(--ink-soft)"><li><strong style="color:var(--ink)">Montpellier car park</strong>, The Ginnel, HG1 2TF. About 5 minutes' walk. Small, so it can fill up.</li><li><strong style="color:var(--ink)">Jubilee multi-storey</strong>, Union Street, HG1 1DJ. About 8 minutes' walk, with plenty of spaces.</li></ul></div>
 </div></div></section>
 """
     return page("find-us.html", f"Find Us | {NAME}, {STREET}, {POSTCODE}",
