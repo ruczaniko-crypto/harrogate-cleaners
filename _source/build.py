@@ -8,7 +8,7 @@ Outputs:
 """
 import json, os, shutil, html
 
-DOMAIN = "https://www.YOURDOMAIN.co.uk"   # change before going live
+DOMAIN = "https://harrogatecleaner.co.uk"
 NAME = "Harrogate Cleaners"
 PHONE = "01423 508568"
 PHONE_INTL = "+441423508568"

@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.YOURDOMAIN.co.uk/sitemap.xml
+Sitemap: https://harrogatecleaner.co.uk/sitemap.xml
